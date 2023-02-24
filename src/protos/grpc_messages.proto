@@ -1,0 +1,248 @@
+// To compile run
+// python -m grpc_tools.protoc -I ./protos --python_out=. --grpc_python_out=. ./protos/grpc_messages.proto
+// from src directory
+
+syntax = "proto3";
+
+service grpc_service {
+    // Chord/Messenger rpc
+    rpc Chat (ChatMsg) returns (Reply) {}
+    rpc SetPredecessor (SetPredecessorRequest) returns (Reply) {}
+    rpc SetSuccessor (SetSuccessorRequest) returns (Reply) {}
+    rpc PreSuc (PSreq) returns (PSres) {}
+
+    //
+    // STORAGE
+    //
+
+    // User
+    rpc FindUser (FindRequest) returns (User) {}
+    rpc SaveUser (User) returns (Reply) {}
+
+    // ChatPartner
+    rpc AddChatpartner (AddChatPartner) returns (Reply) {}
+    rpc FindChatPartners (FindRequest) returns (FindReply) {}
+
+    // Message
+    rpc FindMessage  (FindRequest) returns (Message) {}
+    rpc SaveMessage (Message) returns (Reply) {}
+
+    // Chat
+    rpc AddMessageToChat (AddMessage) returns (Reply) {}
+    rpc FindMessagesFromChat (FindRequest) returns (FindReply) {}
+
+    // Key
+    rpc FindKey (FindRequest) returns (Key) {}
+    rpc SaveKey (Key) returns (Reply) {}
+
+    // KeyChain
+    rpc addToKeyChain (AddKeyChain) returns (Reply) {}
+    rpc FindKeyChain (FindRequest) returns (FindReply) {}
+
+
+    // READY AND JOIN
+    rpc Join (JoinRequest) returns (JoinReply) {}
+    rpc ListAsReady (ListAsReadyRequest) returns (ListAsReadyReply) {}
+
+    // UI rpc
+    rpc SendMessage (SendMessageUI) returns (SendMessageUIReply) {}
+    rpc StartChat (StartChatRequest) returns (StartChatReply) {}
+    rpc Fingertable (Empty) returns (Empty) {}
+
+    rpc StartJoin (Empty) returns (Reply) {}
+    rpc SetChordIds (NewChordIDs) returns (Reply) {}
+
+    rpc getMessages (User) returns (MessagesWrapper) {}
+    rpc getChatpartner (Empty) returns (UserChordIdList) {}
+    rpc StartGetChatPartners (Empty) returns (FindReply) {}
+    rpc StartGetAllMessages (Empty) returns (Reply) {}
+
+    //BOOTSTRAP
+    rpc Register (RegisterNode) returns (Reply) {}
+    rpc StartRegister (Empty) returns (Reply) {}
+    rpc LoginNewNode (LogInToNewNodeRequest) returns (User) {}
+    rpc RetrieveKeys (Empty) returns (Reply) {}
+    rpc Logout (Empty) returns (Empty) {}
+
+    // ENCRYPTION
+    rpc createAssymetricKeys (PubPrivKey) returns (Reply) {}
+    rpc shareSymmetricKey (SymmetricKey) returns (Reply) {}
+  }
+
+  message PSreq {
+    string a = 1;
+  }
+  message PSres {
+    string a = 1;
+  }
+
+  // GENERAL MESSAGES
+  message Empty {}
+  message Reply {bool successful = 1;}
+
+  // Chat
+  message ChatMsg {
+    string content = 1;
+    string sender = 2;
+    string receiver = 3;
+  }
+
+  // Chord
+
+  // joining
+  message SetPredecessorRequest {
+    string chordId = 2;
+    string ip = 3;
+    int32 port = 4;
+    string publickey = 1;
+  }
+  message SetSuccessorRequest {
+    string chordId = 2;
+    string ip = 3;
+    int32 port = 4;
+    string publickey = 1;
+
+  }
+  message JoinRequest {
+    string RequesterChordId = 1;
+    string RequesterIp = 2;
+    int32 RequesterPort = 3;
+    string publicKey = 4;
+  }
+  message JoinReply {
+    bool successful = 1;
+    string pre_chordId = 2;
+    string pre_ip = 3;
+    int32 pre_port = 4;
+    string pre_pk = 8;
+    string suc_chordId = 7;
+    string suc_ip = 5;
+    int32 suc_port = 6;
+    string suc_pk = 9;
+  }
+
+  // Finding - storage etc
+  message FindRequest {
+    string chordId = 1;
+  }
+  message FindReply {
+    bool successful = 1;
+    repeated string foundChordId = 2;
+  }
+  message Message {
+    bool successful = 1;
+    string chordId = 2;
+    string content = 3;
+    repeated string receiver = 4;
+    string sender = 5;
+    int64 timestamp = 6;
+  }
+  message MessagesWrapper {
+    repeated Message Messages = 1;
+  }
+  message User {
+    bool successful = 4;
+    string chordId = 1;
+    string ip = 2;
+    int32 port = 3;
+    string publicKey = 5;
+    string name = 6;
+  }
+  message UserChordIdList {
+    repeated string chord_ids = 1;
+  }
+  message ChatStorage {
+    string chordId = 1;
+    repeated string messageChordIds = 2;
+  }
+  message Key {
+    bool successful = 4;
+    string chordId = 1;
+    string partnerId = 2;
+    string key = 3;
+  }
+  message AddKeyChain {
+    string chordId = 1;
+    string keyChordId = 2;
+  }
+
+  message AddMessage {
+    string chatChordId = 1;
+    string messageChordId = 2;
+  }
+  message AddChatPartner {
+    string chordId = 1;
+    string partnerChordId = 2;
+  }
+  
+  // READY & JOIN
+
+  message ListAsReadyRequest {
+    string ip = 1;
+    string port = 2;
+  }
+  message ListAsReadyReply {
+    bool successful = 1;
+  }
+
+
+  // UI
+  message SendMessageUI {
+    string to_chordId = 1;
+    string content = 2;
+  }
+  message SendMessageUIReply {
+    bool successful = 1;
+  }
+
+  message ReadMessagesRequest {
+    string a = 1;
+  }
+  message ReadMessagesReply {
+    string senderChordId = 1;
+    string content = 2;
+  }
+
+  message StartChatRequest {
+    string chordId = 1;
+  }
+  message StartChatReply {
+    bool successful = 1;
+  }
+
+
+  // BOOTSTRAP
+
+  message LogInToNewNodeRequest {
+    string chordId = 1;
+    string keyId = 2;
+    string partnerId = 3;
+    int64 n = 4;
+    int64 e = 5;
+    int64 d = 6;
+  }
+
+  message NewChordIDs {
+    string chordId = 1;
+    string keyId = 2;
+    string partnerId = 3;
+  }
+
+  message RegisterNode {
+    string ip = 1;
+    int32 port = 2;
+  }
+
+
+  // ENCRYPTION
+
+  message SymmetricKey {
+    string key = 1;
+    string partnerChordId = 2;
+  }
+
+  message PubPrivKey {
+    int64 n = 4;
+    int64 e = 5;
+    int64 d = 6;
+  }

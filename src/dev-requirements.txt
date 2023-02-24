@@ -1,0 +1,4 @@
+asyncio==3.4.3
+grpcio==1.38.1
+grpcio-tools==1.38.1
+Sphinx==4.0.2

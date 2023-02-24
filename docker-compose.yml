@@ -1,0 +1,222 @@
+version: "3"
+services:
+  node1:
+    build: 
+      context: ./src
+      args:
+        - IP=node1
+        - PORT=50001
+        - FLASK_PORT=50201
+    ports:
+      - "50001:50001"
+      - "50201:50201"
+
+  node2:
+    build: 
+      context: ./src
+      args:
+        - IP=node2
+        - PORT=50002
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50202
+    ports:
+      - "50002:50002"
+      - "50202:50202"
+
+  node3:
+    build: 
+      context: ./src
+      args:
+        - IP=node3
+        - PORT=50003
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50203
+    ports:
+      - "50003:50003"
+      - "50203:50203"
+
+  node4:
+    build: 
+      context: ./src
+      args:
+        - IP=node4
+        - PORT=50004
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50204
+    ports:
+      - "50004:50004"
+      - "50204:50204"
+
+  node5:
+    build: 
+      context: ./src
+      args:
+        - IP=node5
+        - PORT=50005
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50205
+    ports:
+      - "50005:50005"
+      - "50205:50205"
+
+  node6:
+    build: 
+      context: ./src
+      args:
+        - IP=node6
+        - PORT=50006
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50206
+    ports:
+      - "50006:50006"
+      - "50206:50206"
+
+  node7:
+    build: 
+      context: ./src
+      args:
+        - IP=node7
+        - PORT=50007
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50207
+    ports:
+      - "50007:50007"
+      - "50207:50207"
+
+  node8:
+    build: 
+      context: ./src
+      args:
+        - IP=node8
+        - PORT=50008
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50208
+    ports:
+      - "50008:50008"
+      - "50208:50208"
+
+  node9:
+    build: 
+      context: ./src
+      args:
+        - IP=node9
+        - PORT=50009
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50209
+    ports:
+      - "50009:50009"
+      - "50209:50209"
+
+  node10:
+    build: 
+      context: ./src
+      args:
+        - IP=node10
+        - PORT=50010
+        - ENTRY_NODE_ADDRESS=node1:50001
+        - FLASK_PORT=50210
+    ports:
+      - "50010:50010"
+      - "50210:50210"
+
+
+      #old versions
+  # node11:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node11
+  #       - PORT=50011
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50011:50011"
+
+  # node12:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node12
+  #       - PORT=50012
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50012:50012"
+
+  # node13:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node13
+  #       - PORT=50013
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50013:50013"
+
+  # node14:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node14
+  #       - PORT=50014
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50014:50014"
+
+  # node15:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node15
+  #       - PORT=50015
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50015:50015"
+
+  # node16:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node16
+  #       - PORT=50016
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50016:50016"
+
+  # node17:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node17
+  #       - PORT=50017
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50017:50017"
+
+  # node18:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node18
+  #       - PORT=50018
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50018:50018"
+
+  # node19:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node19
+  #       - PORT=50019
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50019:50019"
+
+  # node20:
+  #   build: 
+  #     context: ./src
+  #     args:
+  #       - IP=node20
+  #       - PORT=50020
+  #       - ENTRY_NODE_ADDRESS=node1:50001
+  #   ports:
+  #     - "50020:50020"
